@@ -15,12 +15,18 @@ Create a PoolHapX directory and download the source code from repository.
 
 ### Prerequisites
 Java 1.8+: https://www.java.com/en/download/
+
 If there is no data-specific variant-caller needed:
-	* bwa: https://github.com/lh3/bwa
-	* samtools 0.1.19+: http://www.htslib.org/download/
-	* GATK 4+: https://software.broadinstitute.org/gatk/download/index
-	* A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run **PHX_Step1.pl** in parallel for each sample and b) automate **PHX_Step2.pl** to run immediately after **PHX_Step1.pl** finishes successfully. 
-	* A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run PHX_Step1.pl in parallel for each sample and b) automate PHX_Step2.pl to run immediately after PHX_Step1.pl finishes successfully. 
+
+	- bwa: https://github.com/lh3/bwa
+
+	- samtools 0.1.19+: http://www.htslib.org/download/
+	
+	- GATK 4+: https://software.broadinstitute.org/gatk/download/index
+	
+	- A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run **PHX_Step1.pl** in parallel for each sample and b) automate **PHX_Step2.pl** to run immediately after **PHX_Step1.pl** finishes successfully. 
+	
+	- A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run PHX_Step1.pl in parallel for each sample and b) automate PHX_Step2.pl to run immediately after PHX_Step1.pl finishes successfully. 
 
 ## How to Use
 
@@ -34,13 +40,14 @@ The basic command for running PoolHapX. if the sample prefix is "prefix" and the
 
 Because PoolHapX requires specific input in the variant-encoded format (VEF), raw sequencing data must be processed one of the subsequently described pipelines, or a variation thereof. 
 
-#### What is a VEF file?
+	#### What is a VEF file?
 
-The input data for PoolHapX is a modified version of the BAM file, termed the variant encoded (VEF) file. Each line of the VEF contains information about allele at each segregating site in sequence region spanned by the read. For example, if a read called ReadName spanned positions 100 to 200 relative to the reference sequence, and carried the reference allele at position 50 and the alternate allele at position 150, the VEF file would contain the line...
+	The input data for PoolHapX is a modified version of the BAM file, termed the variant encoded (VEF) file. Each line of the VEF contains information about allele at each segregating site in sequence region spanned by the read. For example, if a read called ReadName spanned positions 100 to 200 relative to the reference sequence, and carried the reference allele at position 50 and the alternate allele at position 150, the VEF file would contain the line...
 
-`ReadName 50=0;150=1; // 100 200`
+	`ReadName 50=0;150=1; // 100 200`
 
-One VEF file is generated per pool. In terms of biological applications, a single sample could be the NGS reads of a patient’s HIV population, or a single microbiome sample.
+	One VEF file is generated per pool. In terms of biological applications, a single sample could be the NGS reads of a patient’s HIV population, or a single microbiome sample.
+
 
 
 ### What is your input data? 
