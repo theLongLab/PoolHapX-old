@@ -4,7 +4,7 @@ To tackle the high-dimensional, multifaceted problem of haplotype reconstruction
 
 The union of multiple strategies combines the strengths and compensates for the individual weaknesses of genomics-based algorithms and population genetics-based data-sharing `programs`. PoolHapX is written in Java (version 1.8), which is operating system-agnostic, and is distributed as a JAR file, allowing users to efficiently use the program out-of-the-box.
 
-<img src="https://github.com/lauren-mak/path/to/Figure_3.png" width="900">
+<img src="https://github.com/theLongLab/PoolHapX/blob/master/Figure_3.png" width="900">
 
 **Overview of the PoolHapX methodology:** The PoolHapX (PoolHapX) program approximates the genotypic resolution of single-cell sequencing using only pooled sequencing data by integrating population genetics models with genomics algorithms to reconstruct haplotypes. A) PoolHapX first determines locations of physical linkage uncertainty using short NGS reads, and then divides the full genome into shorter regions. B) Regional haplotypes are solved for and joined together for a parsimonious global distribution of haplotypes. C) The within-pool frequency of each haplotype is estimated by regression to solve for each within-pool haplotype distribution.
 
@@ -19,7 +19,11 @@ If there is no data-specific variant-caller needed:
 	* bwa: https://github.com/lh3/bwa
 	* samtools 0.1.19+: http://www.htslib.org/download/
 	* GATK 4+: https://software.broadinstitute.org/gatk/download/index
+<<<<<<< HEAD
 	* A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run **PHX_Step1.pl** in parallel for each sample and b) automate **PHX_Step2.pl** to run immediately after **PHX_Step1.pl** finishes successfully. 
+=======
+	* A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run PHX_Step1.pl in parallel for each sample and b) automate PHX_Step2.pl to run immediately after PHX_Step1.pl finishes successfully. 
+>>>>>>> master
 
 ## How to Use
 
