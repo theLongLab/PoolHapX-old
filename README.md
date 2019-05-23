@@ -26,8 +26,6 @@ If there is no data-specific variant-caller needed:
 
 * A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run **PHX_Step1.sh** in parallel for each sample and b) automate **PHX_Step2.pl** to run immediately after **PHX_Step1.sh** finishes successfully. 
 
-* A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run **PHX_Step1.sh** in parallel for each sample and b) automate **PHX_Step2.pl** to run immediately after **PHX_Step1.sh** finishes successfully. 
-
 ## How to Use
 
 **PoolHapX input:** Allele-annotated reads and observed allele frequencies. For examples, see 0_0_p0.vef and 0_0_vars.intra_freq.txt in sample_io_files/. 
@@ -49,8 +47,6 @@ The input data for PoolHapX is a modified version of the BAM file, termed the va
 One VEF file is generated per pool. In terms of biological applications, a single sample could be the NGS reads of a patient’s HIV population, or a single microbiome sample.
 
 ### What is your input data? 
-
-If you have two or fewer FASTQ or BAM files, it is possible to run the PoolHapX workflow on a local machine (ex. laptop) using the command line without running out of memory. Instead of submitting **PHX_Submitter.pl**, simply copy and paste the commands from **PHX_Step1.sh** and **PHX_Step2.pl**. Otherwise, the use of a high-performance compute cluster is recommended.
 
 If you have two or fewer FASTQ or BAM files, it is possible to run the PoolHapX workflow on a local machine (ex. laptop) using the command line without running out of memory. Instead of submitting **PHX_Submitter.pl**, simply copy and paste the commands from **PHX_Step1.sh** and **PHX_Step2.pl**. Otherwise, the use of a high-performance compute cluster is recommended.
 
