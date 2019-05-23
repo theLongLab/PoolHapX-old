@@ -24,7 +24,11 @@ If there is no data-specific variant-caller needed:
 
 * GATK 4+: https://software.broadinstitute.org/gatk/download/index
 
+<<<<<<< HEAD
 * A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run **PHX_Step1.sh** in parallel for each sample and b) automate **PHX_Step2.pl** to run immediately after **PHX_Step1.sh** finishes successfully. 
+=======
+* A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run **PHX_Step1.pl** in parallel for each sample and b) automate **PHX_Step2.pl** to run immediately after **PHX_Step1.pl** finishes successfully. 
+>>>>>>> master
 
 ## How to Use
 
@@ -48,7 +52,11 @@ One VEF file is generated per pool. In terms of biological applications, a singl
 
 ### What is your input data? 
 
+<<<<<<< HEAD
 If you have two or fewer FASTQ or BAM files, it is possible to run the PoolHapX workflow on a local machine (ex. laptop) using the command line without running out of memory. Instead of submitting **PHX_Submitter.pl**, simply copy and paste the commands from **PHX_Step1.sh** and **PHX_Step2.pl**. Otherwise, the use of a high-performance compute cluster is recommended.
+=======
+If you have two or fewer FASTQ or BAM files, it is possible to run the PoolHapX workflow on a local machine (ex. laptop) using the command line without running out of memory. Instead of submitting **PHX_Submitter.pl**, simply copy and paste the commands from **PHX_Step1.pl** and **PHX_Step2.pl**. Otherwise, the use of a high-performance compute cluster is recommended.
+>>>>>>> master
 
 #### Option 1:
 You have raw sequencing reads (FASTQ).
