@@ -24,7 +24,7 @@ If there is no data-specific variant-caller needed:
 
 * GATK 4+: https://software.broadinstitute.org/gatk/download/index
 
-* A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run **PHX_Step1.pl** in parallel for each sample and b) automate **PHX_Step2.pl** to run immediately after **PHX_Step1.pl** finishes successfully. 
+* A job scheduler capable of running job arrays and job dependencies (ex. Slurm). Makes it easy to a) run **PHX_Step1.sh** in parallel for each sample and b) automate **PHX_Step2.pl** to run immediately after **PHX_Step1.sh** finishes successfully. 
 
 ## How to Use
 
@@ -48,7 +48,7 @@ One VEF file is generated per pool. In terms of biological applications, a singl
 
 ### What is your input data? 
 
-If you have two or fewer FASTQ or BAM files, it is possible to run the PoolHapX workflow on a local machine (ex. laptop) using the command line without running out of memory. Instead of submitting **PHX_Submitter.pl**, simply copy and paste the commands from **PHX_Step1.pl** and **PHX_Step2.pl**. Otherwise, the use of a high-performance compute cluster is recommended.
+If you have two or fewer FASTQ or BAM files, it is possible to run the PoolHapX workflow on a local machine (ex. laptop) using the command line without running out of memory. Instead of submitting **PHX_Submitter.pl**, simply copy and paste the commands from **PHX_Step1.sh** and **PHX_Step2.pl**. Otherwise, the use of a high-performance compute cluster is recommended.
 
 #### Option 1:
 You have raw sequencing reads (FASTQ).
@@ -62,8 +62,8 @@ You have aligned sequencing reads (BAM) and segregating sites called from data-s
 
 ### Running Option 1: 
 1. Place your reference sequence in `input/`. Index it with BWA, Samtools, and Picard.
-2. If job arrays are not possible, alter **PHX_Submitter.pl** such that it submits **PHX_Step1.pl** as multiple jobs instead of a parallel job array, and **PHX_Step2.pl** is not submitted dependent on the variable `$SLURM_ARRAY_TASK_ID` (i.e.: that all **PHX_Step1.pl** jobs finish).
-3. In **PHX_Step1.pl**, replace the directories for BWA, Samtools, Java, and GATK. If you already have BAM files, comment out the BWA, Samtools, and GATK AddOrReplaceReadGroups commands as necessary. Alter the GATK variant-calling parameters as necessary. Alter the memory requirements as necessary (current setting has been tested with GATK on up to 80 segregating sites).
+2. If job arrays are not possible, alter **PHX_Submitter.pl** such that it submits **PHX_Step1.sh** as multiple jobs instead of a parallel job array, and **PHX_Step2.pl** is not submitted dependent on the variable `$SLURM_ARRAY_TASK_ID` (i.e.: that all **PHX_Step1.sh** jobs finish).
+3. In **PHX_Step1.sh**, replace the directories for BWA, Samtools, Java, and GATK. If you already have BAM files, comment out the BWA, Samtools, and GATK AddOrReplaceReadGroups commands as necessary. Alter the GATK variant-calling parameters as necessary. Alter the memory requirements as necessary (current setting has been tested with GATK on up to 80 segregating sites).
 	* Check the version of Java installed in the compute nodes specifically, not the head node. If it is 1.8+, simply replace `/path/to/java` with java. If not, replace with the absolute path to your personally installed copy of Java.
 	* BAM files must be sorted and indexed to be processed by GATK. 
 	* If your BAM files already have read-group (@RG) information, comment out step 1.1.2. 

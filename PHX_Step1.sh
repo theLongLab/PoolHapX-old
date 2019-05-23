@@ -26,4 +26,4 @@ outgvcf="${prefix}.raw.g.vcf"
 /path/to/samtools index ${interbam}
 
 # Step 1.2) For each pool, call segregating sites from the sequencing reads relative to the reference sequence.
-/path/to/java -Xmx20g -XX:+UseConcMarkSweepGC -XX:ParallelGCThreads=4 -jar /gpfs/common/programs/gatk-4.0.5.1/gatk-package-4.0.5.1-local.jar HaplotypeCaller -R $2 -I ${interbam} -ERC GVCF -ploidy 150 --heterozygosity 0.01 --max-alternate-alleles 1 -O ${outgvcf}
+/path/to/java -Xmx20g -XX:+UseConcMarkSweepGC -XX:ParallelGCThreads=4 -jar /path/to/gatk HaplotypeCaller -R $2 -I ${interbam} -ERC GVCF -ploidy 150 --heterozygosity 0.01 --max-alternate-alleles 1 -O ${outgvcf}

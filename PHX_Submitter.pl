@@ -13,7 +13,7 @@ my $pools = $ARGV[3];
 
 my $inter_dir = "$master_dir/intermediate/";
 my $prefix = $ARGV[1];
-my $ref = "$master_dir/input/"
+my $ref = "$master_dir/input/";
 $ref += $ARGV[2]; 
 
 # Step 0) Submit the jobs for Steps 1 and 2. 

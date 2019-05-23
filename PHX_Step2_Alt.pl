@@ -33,4 +33,4 @@ for (my $p = 0; $p < $pools; $p++) {
 
 # Step 2.3) Reconstructing haplotypes from multi-pool VEF files.
 print STDOUT "\nStep 2.3) Reconstructing haplotypes from multi-pool VEF files...\n\n";
-system("$java_cmd -jar $own_pdir/PoolHapX.jar $input_dir/PHX.properties $inter_dir/$prefix $pools");
+system("$java_cmd -jar $own_pdir/PoolHapX.jar $input_dir/PHX.properties $prefix $pools");
