@@ -14,7 +14,7 @@ my $pools = $ARGV[3];
 my $inter_dir = "$master_dir/intermediate/";
 my $prefix = $ARGV[1];
 my $ref = "$master_dir/input/";
-$ref += $ARGV[2]; 
+$ref .= $ARGV[2]; 
 
 # Step 0) Submit the jobs for Steps 1 and 2. 
 print STDOUT "\nStep 1) For each pool, align the simulated reads to a reference sequence, and call variants using GATK HaplotypeCaller in gVCF mode.\n";
