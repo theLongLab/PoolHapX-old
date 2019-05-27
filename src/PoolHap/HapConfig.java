@@ -9,6 +9,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import PoolHap.LocusAnnotation;
 
@@ -272,50 +273,67 @@ public class HapConfig {
 		}catch(Exception e){e.printStackTrace();}
 	}
 	
-	public HapConfig(String gc_file, String var_file, int num_pools) throws IOException {	// This constructor is for haplotypes in GC output files.
-		double hap_ct_all = 0; 
-		HashMap<String, Integer> hap_tracker = new HashMap<String, Integer>();
+	public HapConfig(String gc_header, String var_file, int num_pools) throws IOException {	// This constructor is for haplotypes in GC output files.
+		HashSet<String> hap_tracker = new HashSet<String>();
+		ArrayList<HashMap<String, Integer>> freq_tracker = new ArrayList<HashMap<String, Integer>>(); 
 		String[] tmp = null;
-		BufferedReader br = new BufferedReader(new FileReader(gc_file));
-		String line = br.readLine(); 
-		while(line != null) {
-			tmp = line.split("\\t|-|\\?"); 
-			String hap = "";
-			for (int l = 0; l < tmp.length - 1; l++) hap += tmp[l];
-			int hap_ct = Integer.parseInt(tmp[tmp.length - 1]); 
-			if (!hap_tracker.containsKey(hap)) hap_tracker.put(hap, hap_ct); 
-			else {
-				int prev_ct = hap_tracker.get(hap); 
-				hap_tracker.put(hap, prev_ct + hap_ct);
-			}
-			hap_ct_all += hap_ct;
-			line = br.readLine();
-		} br.close();
+		this.num_pools = num_pools;
+		for (int p = 0; p < this.num_pools; p++) {
+			freq_tracker.add(new HashMap<String, Integer>());
+			BufferedReader br = new BufferedReader(new FileReader(gc_header +  p + ".in"));
+			String line = br.readLine(); 
+			while(line != null) {
+				tmp = line.split("\\t|-|\\?"); 
+				String hap = "";
+				for (int l = 0; l < tmp.length - 1; l++) hap += tmp[l];
+				int hap_ct = Integer.parseInt(tmp[tmp.length - 1]); 
+				if (!hap_tracker.contains(hap)) hap_tracker.add(hap); 
+				if (!freq_tracker.get(p).containsKey(hap)) freq_tracker.get(p).put(hap, hap_ct); 
+				else {
+					int prev_ct = freq_tracker.get(p).get(hap); 
+					freq_tracker.get(p).put(hap, prev_ct + hap_ct);
+				}
+				line = br.readLine();
+			} br.close();
+		}
 		this.num_loci = tmp.length - 1;
 		this.num_global_hap = hap_tracker.size(); 
 		this.global_haps_string = new String[this.num_global_hap][this.num_loci];
 		this.hap_IDs = new String[this.num_global_hap];
-		int[] hap_ct = new int[this.num_global_hap];
+		int[][] hap_ct = new int[this.num_global_hap][this.num_pools];
 		int hap_index = 0;
-		for (String hap : hap_tracker.keySet()) {
+		for (String hap : hap_tracker) {
 			String[] tmp2 = hap.split("");
 			for (int l = 0; l < this.num_loci; l++)
 				this.global_haps_string[hap_index][l] = tmp2[l]; 
-			hap_ct[hap_index] = hap_tracker.get(hap);
+			for (int p = 0; p < this.num_pools; p++) {
+				if (freq_tracker.get(p).containsKey(hap)) hap_ct[hap_index][p] = freq_tracker.get(p).get(hap);
+				else hap_ct[hap_index][p] = 0; 
+			}
 			this.hap_IDs[hap_index] = Integer.toString(hap_index);
 			hap_index++;
 		}		
 		this.global_haps_freq = new double[this.num_global_hap];
-		for(int h = 0; h < this.num_global_hap; h++)
-			this.global_haps_freq[h] = (double) hap_ct[h] / hap_ct_all; 		
+		this.in_pool_haps_freq = new double[this.num_global_hap][this.num_pools]; 
+		for (int p = 0; p < this.num_pools; p++) {
+			int pool_size = 0; 
+			for (int h = 0; h < this.num_global_hap; h++) pool_size += hap_ct[h][p]; 
+			for (int h = 0; h < this.num_global_hap; h++) this.in_pool_haps_freq[h][p] = (double) hap_ct[h][p] / pool_size; 
+		}
+		for(int h = 0; h < this.num_global_hap; h++) {
+			double curr_hap_global = 0; 
+			for (int p = 0; p < num_pools; p++) {
+				curr_hap_global += this.in_pool_haps_freq[h][p];
+			}
+			this.global_haps_freq[h] = curr_hap_global / num_pools;
+		}
 		this.locusInfo = new LocusAnnotation[this.num_loci];
-		this.num_pools = num_pools;
 		this.pool_IDs = new String[num_pools];
 		for(int k=0;k<this.num_pools;k++)
 			this.pool_IDs[k]=k+"";
 		this.inpool_site_freqs= new double[this.num_loci][this.num_pools];
-		br = new BufferedReader(new FileReader(var_file));
-		line = br.readLine(); 
+		BufferedReader br = new BufferedReader(new FileReader(var_file));
+		String line = br.readLine(); 
 		line = br.readLine();
 		int locus_index = 0;
 		while(line != null){
